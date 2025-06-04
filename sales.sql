@@ -4,8 +4,6 @@ WITH
 OWNER Ehab
 ENCODING= UTF8
 
-drop table categories
-
 CREATE table categories(
 category_id serial primary key,
 category_name text
@@ -24,7 +22,7 @@ category_id INT NOT NULL,
 model_year int,
 list_price DECIMAL(8,2),
 FOREIGN KEY (brand_id) references brand (brand_id),
-FOREIGN KEY (category_id) references  categories (category_id)
+FOREIGN KEY (category_id) references  categories (category_id) on delete cascade on update cascade
 )
 
 create table customers(
@@ -59,8 +57,8 @@ CREATE TABLE staffs (
 	active BOOLEAN NOT NULL,
 	store_id INT NOT NULL,
 	manager_id INT,
-	FOREIGN KEY (store_id) REFERENCES stores (store_id),
-	FOREIGN KEY (manager_id) REFERENCES staffs (staff_id)
+	FOREIGN KEY (store_id) REFERENCES stores (store_id) ON DELETE CASCADE,
+	FOREIGN KEY (manager_id) REFERENCES staffs (staff_id) ON DELETE cascadE ON UPDATE CASCADE
 );
 
 CREATE TABLE orders (
@@ -74,7 +72,7 @@ CREATE TABLE orders (
 	staff_id INT NOT NULL,
 	FOREIGN KEY (customer_id) REFERENCES customers (customer_id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (store_id) REFERENCES stores (store_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (staff_id) REFERENCES staffs (staff_id) ON DELETE NO ACTION ON UPDATE NO ACTION
+	FOREIGN KEY (staff_id) REFERENCES staffs (staff_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE order_items (
